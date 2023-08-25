@@ -1,7 +1,11 @@
 package app
 
 import (
+	"fmt"
 	"testing"
+
+	mocks "github.com/cdamose/unit_test_poc/mocks/repomocks"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestAuth(t *testing.T) {
@@ -20,18 +24,27 @@ func TestAuth(t *testing.T) {
 			want: true,
 		},
 		{
-			name: "Negative flow auth",
+			name: "Possitive flow auth",
 			args: Args{username: "test1", password: "test"},
 			want: false,
 		},
 	}
 	for _, test := range testcase {
 		t.Run(test.name, func(t *testing.T) {
+			auth_svc_mock := &mocks.AuthInterface{}
+
+			auth_svc_mock.On("Auth", "test", "test").
+				Return(true).Once()
+
+			auth_svc_mock.On("Auth", "test1", "test").
+				Return(false).Once()
+
 			//mock auth svc
 			// mock_auth_svc := nil
-			// app := NewAuthApp(mock_auth_svc)
-			// got := app.Auth(test.args.username, test.args.password)
-			// assert.Equal(t, test.want, got)
+			app := NewAuthApp(auth_svc_mock)
+			got := app.Auth(test.args.username, test.args.password)
+			fmt.Println(got)
+			assert.Equal(t, test.want, got)
 		})
 	}
 }

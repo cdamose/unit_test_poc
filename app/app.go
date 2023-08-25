@@ -11,5 +11,9 @@ func NewAuthApp(authSvc service.AuthInterface) AuthInterface {
 }
 
 func (app *AuthApp) Auth(username string, password string) bool {
-	return false
+	if username == "test" && password == "test" {
+		return true
+	} else {
+		return false
+	}
 }

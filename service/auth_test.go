@@ -31,7 +31,7 @@ func TestAuth(t *testing.T) {
 	for _, test := range test_cases {
 		t.Run(test.name, func(t *testing.T) {
 			aut_svc := AuthServcie{}
-			got := aut_svc.auth(test.args.username, test.args.password)
+			got := aut_svc.Auth(test.args.username, test.args.password)
 			assert.Equal(t, test.want, got)
 
 		})

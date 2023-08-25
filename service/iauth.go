@@ -1,5 +1,5 @@
 package service
 
 type AuthInterface interface {
-	auth(username string, password string) bool
+	Auth(username string, password string) bool
 }
